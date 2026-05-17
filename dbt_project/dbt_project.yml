@@ -1,0 +1,30 @@
+name: 'sa_housing_dbt'
+version: '1.0.0'
+config-version: 2
+
+profile: 'sa_housing'
+
+model-paths: ["models"]
+test-paths:  ["tests"]
+macro-paths: ["macros"]
+
+target-path: "target"
+clean-targets: ["target", "dbt_packages"]
+
+models:
+  sa_housing_dbt:
+    staging:
+      +materialized: view
+      +tags: ['staging']
+    intermediate:
+      +materialized: table
+      +tags: ['intermediate']
+    marts:
+      +materialized: table
+      +tags: ['mart']
+
+vars:
+  start_date: '2022-01-01'
+  end_date:   '2025-12-31'
+  min_transaction_value: 50000
+  high_demand_threshold: 7.0
